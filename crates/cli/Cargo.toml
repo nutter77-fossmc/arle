@@ -18,6 +18,7 @@ metal = ["infer/metal", "train/metal", "autograd/metal"]
 nccl = ["cuda", "infer/nccl"]
 
 [dependencies]
+cae = { path = "../cae" }
 anyhow = "1.0"
 clap = { version = "4", features = ["derive"] }
 console = "0.16"

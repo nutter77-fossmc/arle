@@ -230,6 +230,8 @@ pub(crate) enum CliCommand {
     Train(Box<TrainArgs>),
     /// Model utilities (download from Hugging Face).
     Model(Box<ModelArgs>),
+    /// CAE (Communicative Agentic Experts) pipeline.
+    Cae(Box<CaeArgs>),
 }
 
 #[derive(Debug, Clone, clap::Args)]
@@ -772,4 +774,34 @@ mod tests {
             .expect("empty trace path should be rejected");
         assert!(err.to_string().contains("trace path must not be empty"));
     }
+}
+
+#[derive(Debug, Clone, clap::Args)]
+#[command(
+    arg_required_else_help = true,
+    after_help = "CAE (Communicative Agentic Experts) pipeline commands.\n\nExamples:\n  arle cae list\n  arle cae status\n  arle cae serve --config cae_config.json"
+)]
+pub(crate) struct CaeArgs {
+    #[command(subcommand)]
+    pub(crate) command: CaeCommand,
+}
+
+#[derive(Debug, Clone, Subcommand)]
+pub(crate) enum CaeCommand {
+    /// List all 16 CAE experts with their domains.
+    List,
+    /// Show CAE pipeline status (loaded experts, memory usage).
+    Status,
+    /// Run the CAE inference pipeline server.
+    Serve(Box<CaeServeArgs>),
+}
+
+#[derive(Debug, Clone, ClapArgs)]
+pub(crate) struct CaeServeArgs {
+    /// Path to CAE configuration JSON file.
+    #[arg(long, default_value = "cae_config.json")]
+    pub(crate) config: String,
+    /// Port for the CAE pipeline server.
+    #[arg(long, default_value_t = 8080)]
+    pub(crate) port: u16,
 }

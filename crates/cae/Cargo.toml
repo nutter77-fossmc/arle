@@ -1,0 +1,26 @@
+[package]
+name = "cae"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[features]
+default = []
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = "1.0"
+thiserror = { workspace = true }
+train = { path = "../train", default-features = false }
+agent = { path = "../agent" }
+infer = { path = "../../infer", default-features = false, optional = true }
+autograd = { path = "../autograd", default-features = false }
+qwen35-spec = { path = "../qwen35-spec" }
+chat = { path = "../chat" }
+log = "0.4"
+uuid = { workspace = true }
+
+[lints]
+workspace = true

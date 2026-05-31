@@ -2,6 +2,7 @@
 members = [
     ".",
     "infer",
+    "crates/cae",
     "crates/agent",
     "crates/autograd",
     "crates/chat",
